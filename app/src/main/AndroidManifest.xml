@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Preferences"></activity>
         <activity
             android:name=".ShareActivity"
-            android:label="@string/title_activity_share"></activity>
+            android:label="@string/title_activity_share" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

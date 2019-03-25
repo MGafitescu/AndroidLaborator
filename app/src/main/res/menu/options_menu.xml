@@ -10,4 +10,7 @@
         android:id="@+id/login"
         android:title="Login" />
 
+    <item
+        android:id="@+id/settings"
+        android:title = "Settings"/>
 </menu>

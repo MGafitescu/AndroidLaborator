@@ -1,5 +1,6 @@
 package com.gafitescu.lab2;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,20 +96,23 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String greeting = "Welcome !";
-                        Toast toast = Toast.makeText(MainActivity.this,greeting,Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(MainActivity.this, greeting, Toast.LENGTH_LONG);
                         toast.show();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast toast = Toast.makeText(MainActivity.this, "You canceled the login",Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(MainActivity.this, "You canceled the login", Toast.LENGTH_LONG);
                         toast.show();
                     }
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
                 break;
+            case R.id.settings:
+                Intent i = new Intent(this, Preferences.class);
+                startActivity(i);
         }
         return true;
 
@@ -143,11 +154,47 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.v(TAG, "Se apeleaza onPause");
+        String filename = "myfile.txt";
+        String name = "";
+        FileOutputStream outputStream;
+        StringBuilder sb = new StringBuilder();
+        try {
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            for (int i = 0; i < this.items.size(); i++) {
+                name = this.items.get(i).getItemName();
+                sb.append(name);
+                sb.append("\n");
+            }
+            outputStream.write(sb.toString().getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.v(TAG, "Se apeleaza onResume");
+        try {
+            FileInputStream fis = getApplicationContext().openFileInput("myfile.txt");
+            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+
+            Log.v(TAG, sb.toString());
+
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Exceptie");
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, "Exceptie");
+        } catch (IOException e) {
+            Log.e(TAG, "Exceptie");
+        }
+
     }
 }
