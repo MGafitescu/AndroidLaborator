@@ -13,4 +13,10 @@
     <item
         android:id="@+id/settings"
         android:title = "Settings"/>
+    <item
+        android:id = "@+id/sensors"
+        android:title="Sensors"/>
+    <item
+        android:id = "@+id/location"
+        android:title="Location"/>
 </menu>
