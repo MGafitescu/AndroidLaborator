@@ -3,6 +3,7 @@ package com.gafitescu.lab2;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Camera;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -119,6 +120,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.location:
                 Intent locationIntent = new Intent(this, LocationActivity.class);
                 startActivity(locationIntent);
+            case R.id.camera:
+                Intent cameraIntent = new Intent(this, CameraActivity.class);
+                startActivity(cameraIntent);
         }
         return true;
 
